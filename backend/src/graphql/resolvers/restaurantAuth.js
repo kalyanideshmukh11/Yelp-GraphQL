@@ -8,6 +8,7 @@ const Restaurant = require('../../models/restaurant');
 module.exports = {
   restaurantSignUp: async (args) => {
     try {
+      console.log(args)
       let userRestaurant = await Restaurant.findOne({
         email: args.restaurantSignUpInput.email,
       });
@@ -22,6 +23,7 @@ module.exports = {
 
       userRestaurant.password = await bcrypt.hash(userRestaurant.password, salt);
       const result = await userRestaurant.save();
+      console.log("result",result)
       return { ...result._doc };
     } catch (e) {
       return new Error('Unable to sign up. Please try again.');

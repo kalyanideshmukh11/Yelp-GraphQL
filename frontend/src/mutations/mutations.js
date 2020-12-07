@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
-const studentLoginMutation = gql`
+const customerLoginMutation = gql`
     mutation {
-        studentLogin($email: String, $password: String) {
+        customerLogin($email: String, $password: String) {
             email: $email
             password: $password
         }{
@@ -12,9 +12,9 @@ const studentLoginMutation = gql`
     } 
 `;
 
-const companyLoginMutation = gql`
+const restaurantLoginMutation = gql`
     mutation {
-        companyLogin($email: String, $password: String) {
+        restaurantLogin($email: String, $password: String) {
             email: $email
             password: $password
         }{
@@ -24,26 +24,24 @@ const companyLoginMutation = gql`
     }    
 `;
 
-const studentSignupMutation = gql`
+const customerSignupMutation = gql`
     mutation {
-        studentSignUp($first_name: String, $last_name: String, $email: String, $password: String, $college_name: String){
+        customerSignUp($first_name: String, $last_name: String, $email: String, $password: String){
             first_name: $first_name
             last_name: $last_name
             email: $email
             password: $password
-            college_name: $college_name
         }{
             first_name
             last_name
             email
-            college_name
         }
     }    
 `;
 
-const companySignupMutation = gql`
+const restaurantSignupMutation = gql`
     mutation {
-        companySignUp($name: String, $email: String, $password: String, $city: String, $state: String, $country: String){
+        restaurantSignUp($name: String, $email: String, $password: String, $city: String, $state: String, $country: String){
             name: $name
             email: $email
             password: $password
@@ -60,27 +58,27 @@ const companySignupMutation = gql`
     }    
 `;
 
-const postJobMutation = gql`
+const postMenuMutation = gql`
     mutation {
-        postJob($title: String, $app_deadline: String, $salary: Number, $location: String, $description: String, $job_type: String) {
-            title: $title
-            app_deadline: $app_deadline
-            salary: $salary
-            location: $location
+        postMenu($name: String, $description: String, $price: Number, $ingredient: String, $description: String, $category: String) {
+            name: $name
             description: $description
-            job_type: $job_type
+            price: $price
+            ingredient: $ingredient
+            description: $description
+            category: $category
         }{
-            title
+            name
             posting_date
-            location
-            salary
+            ingredient
+            price
             description
-            job_type
+            category
         }
     }    
 `;
 
-const updateCompanyProfileMutation = gql`
+const updateRestaurantProfileMutation = gql`
     mutation {
         updateCompanyProfile($city: String, $state: String, $country: String){
             city: $city
@@ -96,32 +94,31 @@ const updateCompanyProfileMutation = gql`
     }
 `;
 
-const updateStudentProfileMutation = gql`
+const updateCustomerProfileMutation = gql`
     mutation {
-        updateStudentProfile($skill: String){
-            skill: $skill
+        updateStudentProfile($about_me: String){
+            about_me: $about_me
         }{
             first_name
             last_name
             email
             college_name
             career_objective
-            skills
+            about_me
         }
     }    
 `;
 
-const applyToJobMutation = gql`
+const placeMenuOrderMutation = gql`
     mutation {
-        applyToJob($jobId: String, $resume: String){
-            jobId: $jobId
-            resume: $resume
+        placeOrder($menuId: String){
+            menuId: $menuId
         }{
-            student
+            customer
             applied_date
             status
         }
     }    
 `;
 
-export { studentLoginMutation, companyLoginMutation, studentSignupMutation, companySignupMutation, postJobMutation, updateCompanyProfileMutation, updateStudentProfileMutation, applyToJobMutation };
+export { customerLoginMutation, restaurantLoginMutation, customerSignupMutation, restaurantSignupMutation, postMenuMutation, updateRestaurantProfileMutation, updateCustomerProfileMutation, placeMenuOrderMutation };

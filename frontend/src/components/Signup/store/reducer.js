@@ -3,85 +3,49 @@ import * as actionTypes from '../../../constants/action-types';
 const initialState = {
     first_name: "",
     last_name: "",
+    restaurant_name:"",
+    restaurant_location:"",
     email_id: "",
     password: "",
-    college_name: "",
-    company_name: "",
-    email: "",
-    company_password: "",
-    city: "",
-    state: "",
-    country: "",
-    error: null,
-    company_error: null
+    error: null
 }
 
 const signupReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case actionTypes.ADD_COMPANY_EMAIL:
-            return {
-                ...state,
-                email: action.payload,
-            }
-        case actionTypes.ADD_COMPANY_PASSWORD:
-            return {
-                ...state,
-                company_password: action.payload,
-            }
-        case actionTypes.ADD_COMPANY_NAME:
-            return {
-                ...state,
-                company_name: action.payload,
-            }
-        case actionTypes.ADD_CITY:
-            return {
-                ...state,
-                city: action.payload,
-            }
-        case actionTypes.ADD_COUNTRY:
-            return {
-                ...state,
-                country: action.payload,
-            }
-        case actionTypes.ADD_STATE:
-            return {
-                ...state,
-                state: action.payload,
-            }
-        case actionTypes.SET_COMPANY_ERROR:
-            return {
-                ...state,
-                company_error: action.payload,
-            }
+    switch(action.type){
         case actionTypes.ADD_EMAIL:
             return {
-                ...state,
-                email_id: action.payload,
+                 ...state,
+                 email_id: action.payload,
             }
         case actionTypes.ADD_PASSWORD:
             return {
-                ...state,
-                password: action.payload,
+                    ...state,
+                    password: action.payload,
             }
         case actionTypes.ADD_FIRST_NAME:
             return {
-                ...state,
-                first_name: action.payload,
+                 ...state,
+                 first_name: action.payload,
             }
         case actionTypes.ADD_LAST_NAME:
             return {
-                ...state,
-                last_name: action.payload,
+                    ...state,
+                    last_name: action.payload,
             }
-        case actionTypes.ADD_COLLEGE_NAME:
+        case actionTypes.ADD_RESTAURANT_NAME:
             return {
-                ...state,
-                college_name: action.payload,
+                     ...state,
+                    restaurant_name: action.payload,
+            }
+        case actionTypes.ADD_LOCATION_NAME:
+            return {
+                        ...state,
+                        restaurant_location: action.payload,
             }
         case actionTypes.SET_SIGNUP_ERROR:
             return {
-                ...state,
-                error: action.payload,
+                    ...state,
+                    error: action.payload,
             }
         default:
             return initialState;

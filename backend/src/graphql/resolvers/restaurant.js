@@ -1,66 +1,64 @@
 /* eslint-disable no-underscore-dangle */
 
-//const Job = require('../../models/Job');
+const Menu = require('../../models/Menu');
 var express = require('express');
 const Customer = require('../../models/Customer');
 
 module.exports = {
-  // postJob: async (args, context) => {
-  //   try {
-  //     const jobs = args.jobInput;
-
-  //     const jobEntry = new Job({
-  //       ...jobs,
-  //       company: context.req.user._id,
-  //       posting_date: new Date()
-  //     });
-  //     const result = await jobEntry.save();
-  //     result._doc.posting_date = new Date(result._doc.posting_date).toISOString().split('T')[0];
-	//     return { ...result._doc };
-  //   } catch (e) {
-  //       return new Error('Unable to post a job. Please try again.');
-  //   }
-  // },
-  // getJobApplicants: async (args, context) => {
-  //   try {
-  //     const applications = await Job.find({ _id: args.jobId }).select('application -_id');
-  //     const students = [];
-  
-  //     if (applications && applications[0]) {
-  //         for( const app of applications[0].application ) {
-  //             let student = await Student.find({ _id: app.student });
-  //             students.push(student[0]);
-  //         }
-          
-  //         if(students && students.length > 0) {
-  //           return students;
-  //         }
-  //     }
-  //     return students ;
-  //   } catch (e) {
-  //       return new Error('Unable to fetch data.');
-  //   }
-  // },
-  getCustomers: async (args, context) => {
+  postMenu: async (args, context) => {
     try {
-      const customers = await Customer.find();
-      return customers;
+      const menus = args.menuInput;
+
+      const menuEntry = new Menu({
+        ...menus,
+       restaurant: context.req.user._id, 
+      });
+      console.log(menuEntry)
+      const result = await menuEntry.save();
+	    return { ...result._doc };
+    } catch (e) {
+        return new Error('Unable to add a menu. Please try again.');
+    }
+  },
+  getOrders: async (args, context) => {
+    try {
+      const menus=[]
+       menus = await Menu.find();
+      console.log(menus)
+      return menus;
     } catch (e) {
        return new Error('Unable to fetch data.');
     }
   },
+
   updateRestaurantProfile: async(args, context) => {
     try {
       const input = args.restaurantInput;
-      const restaurant = await Restaurant.findById(context.req.user._id);      
+      const restaurant = await Restaurant.findById(context.req.user._id);   
+      console.log(restaurant)    
       restaurant.city = input.city;
       restaurant.state = input.state;
       restaurant.country = input.country;
+      restaurant.phone_number= input.phone_number;
       const result = await restaurant.save();
       return { ...result._doc };
     } catch (e) {
       console.log(e)
       return new Error('Unable to update the restaurant description. Please try again.');
+    }
+  },
+
+  updateOrder: async(args, context) => {
+    try {
+      const input = args.orderInput;
+      const order = await Menu.findById(context.req.user._id);   
+      console.log(order)    
+      order.staus = input.status;
+      const result = await order.save();
+      return { ...result._doc };
+    } catch (e) {
+      console.log(e)
+      return new Error('Unable to update the order. Please try again.');
     }
   },
 };

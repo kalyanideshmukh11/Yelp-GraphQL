@@ -1,12 +1,12 @@
 const express = require('express');
-
 const router = express.Router();
 const { checkAuth } = require('../../middleware/auth');
 const kafka = require('../../../kafka/client');
 
-router.post('/', checkAuth, async (req, res) => {
+router.post('/add', checkAuth, async (req, res) => {
     req.body.user = req.user;
-    kafka.make_request('company_job', req.body, (err, results) => {        
+    console.log(req.user)
+    kafka.make_request('restaurant_menu', req.body, (err, results) => {        
         if (err) {
             console.log('Inside err');
             res.json({
@@ -16,16 +16,17 @@ router.post('/', checkAuth, async (req, res) => {
         } else {
             console.log('Inside else');
             res.json({
-                job: results,
+                menu: results,
             });
             res.end();
         }
     });
 });
+
 
 router.get('/all', checkAuth, async (req, res) => {
     let payload = {query: req.query, user: req.user};
-    kafka.make_request('company_jobs', payload, (err, results) => {
+    kafka.make_request('restaurant_menus', payload, (err, results) => {
         if (err) {
             console.log('Inside err');
             res.json({
@@ -35,15 +36,16 @@ router.get('/all', checkAuth, async (req, res) => {
         } else {
             console.log('Inside else');
             res.json({
-                jobs: results,
+                menus: results,
             });
             res.end();
         }
     });
 });
 
-router.get('/students', checkAuth, async (req, res) => {
-    kafka.make_request('company_students', req.query, (err, results) => {
+router.get('/allevents', checkAuth, async (req, res) => {
+    let payload = {query: req.query, user: req.user};
+    kafka.make_request('restaurant_events', payload, (err, results) => {
         if (err) {
             console.log('Inside err');
             res.json({
@@ -53,7 +55,25 @@ router.get('/students', checkAuth, async (req, res) => {
         } else {
             console.log('Inside else');
             res.json({
-                students: results,
+                menus: results,
+            });
+            res.end();
+        }
+    });
+});
+
+router.get('/customers', checkAuth, async (req, res) => {
+    kafka.make_request('restaurant_customers', req.query, (err, results) => {
+        if (err) {
+            console.log('Inside err');
+            res.json({
+                status: 'error',
+                msg: 'System Error, Try Again.',
+            });
+        } else {
+            console.log('Inside else');
+            res.json({
+                customers: results,
             });
             res.end();
         }

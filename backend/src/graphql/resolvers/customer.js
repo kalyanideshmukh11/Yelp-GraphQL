@@ -1,21 +1,22 @@
-//const Job = require('../../models/Job');
+const Menu = require('../../models/Menu');
 var express = require('express');
+const Restaurant =require('../../models/restaurant')
 
 module.exports = {
-    // searchJobs: async (args, context) => {
-    //     try {
-    //       const jobs = await Job.find();
-    //       return jobs.filter(job => job.title.includes(args.title)).map(job => {
-    //           return {
-    //             ...job._doc,
-    //             posting_date: new Date(job._doc.posting_date).toISOString().split('T')[0],
-		//             app_deadline: new Date(job._doc.app_deadline).toISOString().split('T')[0]
-    //           }
-    //       });
-    //     } catch (e) {
-    //         return new Error('Unable to fetch data.');
-    //     }
-    // },
+    searchMenus: async (args, context) => {
+        try {
+          const menus = await Menu.find();
+          console.log(menus)
+          console.log(args)
+          return menus.filter(menu => menu.name.includes(args.name)).map(menu => {
+              return {
+                ...menu._doc,
+              }
+          });
+        } catch (e) {
+            return new Error('Unable to fetch data.');
+        }
+    },
     updateCustomerProfile: async (args, context) => {
         try {
           const input = args.customerInput;
@@ -27,31 +28,31 @@ module.exports = {
           return new Error('Unable to update the student. Please try again.');
         }
     },
-    getAllCustomers: async (args, context) => {
+    getAllRestaurants: async (args, context) => {
+      try {
+          const restaurants = await Restaurant.find();
+          return restaurants;
+      } catch (e) {
+          return new Error('Unable to fetch data.');
+      }
+  },
+    placeMenuOrder: async (args, context) => {
+        const { menuId } = args.placeOrderInput;
+        const menu = await Menu.findById(menuId);
+        //const customer = context.req.user._id;
+        const customer= "5fcde2320e2146512883ae43"
         try {
-            const customers = await Customer.find({ _id: {'$ne': context.req.user._id}});
-            return customers;
+          const order = {
+            customer,
+            order_date: new Date(),
+            status: 'Pending'
+          };
+          menu.order.unshift(order);
+          await menu.save();
+          order.order_date = new Date(order.order_date).toISOString().split('T')[0];
+          return order;
         } catch (e) {
-            return new Error('Unable to fetch data.');
+          return new Error('Unable to apply job. Please try again.');
         }
-    },
-    // applyToJob: async (args, context) => {
-    //     const { jobId, resume } = args.applyJobInput;
-    //     const job = await Job.findById(jobId);
-    //     const student = context.req.user._id;
-    //     try {
-    //       const application = {
-    //         student,
-    //         resume,
-    //         applied_date: new Date(),
-    //         status: 'Pending'
-    //       };
-    //       job.application.unshift(application);
-    //       await job.save();
-    //       application.applied_date = new Date(application.applied_date).toISOString().split('T')[0];
-    //       return application;
-    //     } catch (e) {
-    //       return new Error('Unable to apply job. Please try again.');
-    //     }
-    // }, 
+    }, 
 };

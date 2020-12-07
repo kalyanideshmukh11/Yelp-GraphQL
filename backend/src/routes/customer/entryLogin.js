@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 const { auth } = require('../../middleware/auth');
 const kafka = require('../../../kafka/client');
@@ -17,7 +16,7 @@ router.post('/login', async (req, res) => {
         } else {
             console.log('Inside else');
             res.json({
-                student: results,
+                customer: results,
             });
             res.end();
         }

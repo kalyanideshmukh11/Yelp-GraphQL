@@ -1,10 +1,7 @@
-const USER = 'admin';
-const PASSWORD = 'admin%23123';
 const LOCAL_URI = 'http://localhost:3000';
-//const URI = 'mongodb+srv://'+USER+':'+PASSWORD+'@handshake-1stbk.mongodb.net/test?retryWrites=true&w=majority';
-const URI = 'mongodb+srv://'+USER+':'+PASSWORD+'@test.pzz2j.mongodb.net/yelp?retryWrites=true&w=majority';
-const DATABASE = 'handshake';
-const JWTPASSWORD = 'handshake';
+const URI = 'mongodb+srv://root:root@yelp.cgwwo.mongodb.net/yelp?retryWrites=true&w=majority';
+const DATABASE = 'yelp';
+const JWTPASSWORD = 'yelp';
 
 module.exports = {
     URI: URI,
@@ -12,3 +9,5 @@ module.exports = {
     DATABASE: DATABASE,
     JWTPASSWORD: JWTPASSWORD
 }
+
+

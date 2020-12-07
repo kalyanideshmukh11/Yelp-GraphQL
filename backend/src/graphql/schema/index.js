@@ -51,7 +51,7 @@ input RestaurantInput {
     city: String
     state: String
     country: String
-    phone_number: String
+    phone_number: String  
 }
 
 input CustomerInput {
@@ -70,10 +70,40 @@ input CustomerLogin {
   password: String!
 }
 
+input MenuPosting {
+  name: String!
+  price: Int
+  ingredient: String
+  description: String
+  category: String
+}
+
+type Menu {
+  _id: ID!
+  name: String!
+  ingredient: String
+  category: String
+  description: String!
+  price: Int
+  restaurant: ID!
+}
+
+input PlaceOrder {
+  menuId: String!
+}
+
+type Order {
+  _id: ID
+  customer: ID!
+  order_date: String!
+  status: String
+}
+
 
 type RootQuery {
-  getCustomers: [Customer]!
-  getAllCustomers: [Customer]!
+  getOrders: [Order]!
+  getAllRestaurants: [Restaurant]!
+  searchMenus(name: String!): [Menu]!
 }
 
 type RootMutation {
@@ -83,6 +113,9 @@ type RootMutation {
   restaurantSignUp(restaurantSignUpInput: RestaurantSignUp): Restaurant
   updateRestaurantProfile(restaurantInput: RestaurantInput): Restaurant!
   updateCustomerProfile(customerInput: CustomerInput): Customer!
+  postMenu(menuInput : MenuPosting) : Menu
+  placeMenuOrder(placeOrderInput: PlaceOrder): Order
+  updateOrder(OrderInput:Order) : Order
 }
 
 schema {
@@ -90,3 +123,9 @@ schema {
   mutation: RootMutation
 }
 `);
+
+
+
+  
+
+  

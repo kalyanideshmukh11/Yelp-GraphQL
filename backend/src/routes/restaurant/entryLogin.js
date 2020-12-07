@@ -1,9 +1,7 @@
 const express = require('express');
-
 const router = express.Router();
 const { auth } = require('../../middleware/auth');
 const kafka = require('../../../kafka/client');
-
 auth();
 
 router.post('/login', async (req, res) => {
@@ -17,7 +15,7 @@ router.post('/login', async (req, res) => {
         } else {
             console.log('Inside else');
             res.json({
-                company: results,
+                restaurant: results,
             });
             res.end();
         }
@@ -25,6 +23,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
+  console.log(req.body)
     kafka.make_request('restaurant_signup', req.body, (err, results) => {
         if (err) {
           console.log('Inside err');

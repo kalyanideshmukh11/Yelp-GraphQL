@@ -6,18 +6,19 @@ import { addEmail, addPassword, authSuccess, authFail} from './store/action';
 import { PATH } from '../../config';
 import { Link } from 'react-router-dom';
 
-class Login extends Component {
+
+class RestaurantLogin extends Component {
     submitHandler = async (event) => {
         event.preventDefault();
         const data = {
-            email: this.props.email,
+            email_id: this.props.email_id,
             password: this.props.password
         }
-
+        
         let requestBody = {
             query: `
             query {
-                studentLogin(email: "${data.email}", password: "${data.password}") {
+                restaurantLogin(email: "${data.email}", password: "${data.password}") {
                   userId
                   token
                 }
@@ -39,19 +40,6 @@ class Login extends Component {
                 console.log(err);
             });
         };
-
-        // axios.defaults.withCredentials = true;
-        // axios.post(PATH + "/student/login", data)
-        // .then(res => {
-        //     if(res.status === 200){
-        //         this.props.authSuccess(res.data.student.responseMessage.token);
-        //         localStorage.setItem("user", res.data.student.responseMessage.user);
-        //         this.props.history.push('/dashboard');
-        //     }
-        // })
-        // .catch(err=>{
-        //     this.props.authFail(err.data.msg);
-        // })
     }
 
     emailHandler = (event) => {
@@ -62,11 +50,11 @@ class Login extends Component {
         this.props.addPassword(event.target.value);
     }
 
-    render(){
+    render() {
         return (
             <Container className="m-5 d-flex justify-content-center">                
                 <Form onSubmit={this.submitHandler}>
-                <h1 className="lead text-center">Hello! Enter details below to sign in to your account.</h1>
+                <h1 className="lead text-center">Restaurant Login</h1>
                     <Form.Group controlId="formGroupEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" required onChange={this.emailHandler}/>
@@ -77,18 +65,19 @@ class Login extends Component {
                     </Form.Group>
                     {this.props.error && <Alert variant="danger">{this.props.error}</Alert>}
                     <Button type="submit">Sign in</Button>
+                    <p>  </p>
+                    <p className="text-muted">Are you a customer?</p>
+                    <Link to="/login">Login here</Link>
                 </Form>
-                <p className="text-muted ml-2">Are you an employer?</p>
-                <Link to="/company/login">Sign in here</Link>
+                
             </Container>            
         )
-    } 
-}
-
+    };
+};
 
 const mapStateToProps = (state) => {
     return {
-        email: state.login.email,
+        email_id: state.login.email_id,
         password: state.login.password,
         error: state.login.error
     };
@@ -103,4 +92,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantLogin);

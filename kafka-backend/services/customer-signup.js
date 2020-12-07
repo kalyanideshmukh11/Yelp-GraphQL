@@ -5,9 +5,10 @@ const config = require('../config');
 
 handle_request =  async(msg, callback) => {
 	try {
-        const customer = msg;
+        
+        const student = msg;
         let userCustomer = await Customer.findOne({
-                email: customer.email,
+                email: student.email,
 		});
 		
         if (userCustomer) {
@@ -15,7 +16,7 @@ handle_request =  async(msg, callback) => {
 			callback(null, {status: 404, responseMessage: 'Email already exists! Please sign in or create a new account.'});
         }
         userCustomer = new Customer({
-            ...customer,
+            ...student,
         });
         const salt = await bcrypt.genSalt(10);
 

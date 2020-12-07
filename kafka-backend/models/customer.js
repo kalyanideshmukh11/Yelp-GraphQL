@@ -67,19 +67,6 @@ const CustomerSchema = new Schema({
       date: {
         type: Date
       },
-      message_conversation: [
-        {
-          body: {
-            type: String,
-          },
-          date: {
-            type: Date
-          },
-          action: {
-            type: String
-          },
-        }
-      ]
     }
   ],
 });

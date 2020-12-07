@@ -1,9 +1,6 @@
-const USER = 'admin';
-const PASSWORD = 'admin%23123';
-const URI = 'mongodb+srv://'+USER+':'+PASSWORD+'@test.pzz2j.mongodb.net/yelp?retryWrites=true&w=majority';
-//mongodb+srv://admin:<password>@test.pzz2j.mongodb.net/<dbname>?retryWrites=true&w=majority
-const DATABASE = 'handshake';
-const JWTPASSWORD = 'handshake';
+const URI = 'mongodb+srv://root:root@yelp.cgwwo.mongodb.net/yelp?retryWrites=true&w=majority';
+const DATABASE = 'yelp';
+const JWTPASSWORD = 'yelp';
 
 module.exports = {
     URI: URI,

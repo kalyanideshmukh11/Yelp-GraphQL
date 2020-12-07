@@ -3,8 +3,8 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import CustomerSignup from './components/Signup/CustomerSignup';
-import RestaurantSignup from './components/Signup/RestaurantSignup';
-import RestaurantLogin from './components/Login/RestaurantLogin';
+// import RestaurantSignup from './components/Signup/RestaurantSignup';
+// import RestaurantLogin from './components/Login/RestaurantLogin';
 // import Profile from './containers/Profile/profile';
 // import Logout from './components/Logout/logout';
 // import Dashboard from './containers/Dashboard/dashboard';
@@ -19,29 +19,16 @@ class Main extends Component {
         let routes = (
             <Switch>                
                 <Route path="/login" component={Login} />
-                <Route path="/restaurant/login" component={RestaurantLogin} />
+                
                 <Route path="/signup" component={Signup} />
                 <Route path="/customer" component={CustomerSignup} />
-                <Route path="/restaurant/signup" component={RestaurantSignup} />
+                
                 <Redirect to='/' />
                 <Route path="/login/customer" component={customerLogin} />
             </Switch>           
         );
     
-        if(localStorage.getItem('token')){
-            routes = (
-                <Switch>                               
-                    <Route path="/profile" component={Profile} />
-                    <Route path="/logout" component={Logout} />
-                    <Route path="/dashboard" component={Dashboard} />
-                    <Route path="/application" component={Application} />
-                    <Route path="/customer" component={Customer} />
-                    <Route path="/restaurantprofile" component={RestaurantProfile} />
-                    <Route path="/restaurant/dashboard" component={RestaurantDashboard} />
-                    <Redirect to='/' />
-                </Switch>
-            );
-        }
+
         return (
             <div>
                 {routes}
@@ -57,3 +44,21 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Main);
+
+
+/*
+        if(localStorage.getItem('token')){
+            routes = (
+                <Switch>                               
+                    <Route path="/profile" component={Profile} />
+                    <Route path="/logout" component={Logout} />
+                    <Route path="/dashboard" component={Dashboard} />
+                    <Route path="/application" component={Application} />
+                    <Route path="/customer" component={Customer} />
+                    <Route path="/restaurantprofile" component={RestaurantProfile} />
+                    <Route path="/restaurant/dashboard" component={RestaurantDashboard} />
+                    <Redirect to='/' />
+                </Switch>
+            );
+        }
+*/

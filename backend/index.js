@@ -1,26 +1,17 @@
 const express = require('express');
-
 const app = express();
-
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const connectDB = require('./src/db/mongoose');
-
 require('dotenv').config();
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-
 app.use(express.static('uploads'));
-
 const graphqlHTTP = require('express-graphql');
 const graphqlSchema = require('./src/graphql/schema/index');
 const graphqlResolver = require('./src/graphql/resolvers/index');
-
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-
 const auth = require('./src/middleware/auth');
-
 connectDB();
 
 app.use(bodyParser.json());
@@ -28,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: 'handshake_graphql',
+    secret: 'yelp_graphql',
     resave: false,
     saveUninitialized: false,
     duration: 60 * 60 * 1000,

@@ -13,19 +13,32 @@ class CustomerLogin extends Component {
             email_id: this.props.email_id,
             password: this.props.password
         }
-        axios.defaults.withCredentials = true;
 
-        axios.post(PATH + "/customer/customerlogin", data)
-        .then(res => {
-            if(res.status === 200){
-                this.props.authSuccess(res.data.token);
-                this.props.history.push('/dashboard');
+        let requestBody = {
+            query: `
+            query {
+                customerLogin(email: "${data.email}", password: "${data.password}") {
+                  userId
+                  token
+                }
+              }
+            `
+        };
+
+        fetch(PATH + "/graphql", {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'Content-Type': 'application/json'
             }
-        })
-        .catch(err=>{
-            this.props.authFail(err.response.data.msg);
-        })
-    }
+            })
+            .then(resData => {
+                console.log(resData);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        };
 
     emailHandler = (event) => {
         this.props.addEmail(event.target.value);

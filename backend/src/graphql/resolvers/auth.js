@@ -8,6 +8,7 @@ const Customer = require('../../models/Customer');
 module.exports = {
   customerSignUp: async (args) => {
     try {
+      console.log(args)
       let userCustomer = await Customer.findOne({
         email: args.customerInput.email,
       });

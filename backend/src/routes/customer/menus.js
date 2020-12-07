@@ -3,21 +3,10 @@ const express = require('express');
 const router = express.Router();
 const { checkAuth } = require('../../middleware/auth');
 const kafka = require('../../../kafka/client');
-const multer = require('multer');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null , file.originalname)
-    }
-});
-
-const upload = multer({ storage: storage });
 
 router.get('/', checkAuth, async (req, res) => {
-    kafka.make_request('student_jobs', req.query, (err, results) => {
+    kafka.make_request('customer_menus', req.query, (err, results) => {
         if (err) {
             console.log('Inside err');
             res.json({
@@ -27,16 +16,16 @@ router.get('/', checkAuth, async (req, res) => {
         } else {
             console.log('Inside else');
             res.json({
-                jobs: results,
+                menus: results,
             });
             res.end();
         }
     });
 });
 
-router.get('/applications', checkAuth, async (req, res) => {
+router.get('/orders', checkAuth, async (req, res) => {
     let payload = {query: req.query, user: req.user};
-    kafka.make_request('student_applications', payload, (err, results) => {
+    kafka.make_request('customer_orders', payload, (err, results) => {
         if (err) {
             console.log('Inside err');
             res.json({
@@ -46,17 +35,17 @@ router.get('/applications', checkAuth, async (req, res) => {
         } else {
             console.log('Inside else');
             res.json({
-                applications: results,
+                orders: results,
             });
             res.end();
         }
     });
 });
 
-router.post('/application', upload.single('resume'), checkAuth, async (req, res) => {
+router.post('/order', checkAuth, async (req, res) => {
     req.body.user = req.user;
     req.body.resume = req.file.filename;
-    kafka.make_request('student_application', req.body, (err, results) => {
+    kafka.make_request('customer_order', req.body, (err, results) => {
         if (err) {
             console.log('Inside err');
             res.json({
@@ -66,7 +55,7 @@ router.post('/application', upload.single('resume'), checkAuth, async (req, res)
         } else {
             console.log('Inside else');
             res.json({
-                application: results,
+                order: results,
             });
             res.end();
         }

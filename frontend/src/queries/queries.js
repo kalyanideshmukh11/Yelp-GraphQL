@@ -1,53 +1,41 @@
 import { gql } from 'apollo-boost';
 
-const getJobApplicantsQuery = gql`
+const getAllRestaurantsQuery = gql`
     query {
-        getJobApplicants(jobId: $jobId){
-            first_name
-            last_name
+        getAllRestaurants{
+            _id
+            name
             email
-            college_name
-            skills
+            password
+            city
+            state
+            country
+            phone_number
         }
     }    
 `;
 
-const getStudentsQuery = gql`
+const getOrdersQuery = gql`
     query {
-        getStudents{
-            first_name
-            last_name
-            email
-            college_name
-            skills
+        getOrders{
+            _id
+            customer
+            order_date
+            status
         }
     }    
 `;
-
-const getAllStudentsQuery = gql`
+const searchMenusQuery = gql`
     query {
-        getAllStudents{
-            first_name
-            last_name
-            email
-            college_name
-            skills
-        }
-    }    
-`;
-
-const searchJobsQuery = gql`
-    query {
-        searchJobs(title: $title){
-            title
-            location
-            salary
+        searchMenus(name: $name){
+            name
+            ingredient
+            category
             description
-            job_type
-            posting_date
-            app_deadline
+            price
+            restaurant
         }
     }
 `;
 
-export { getJobApplicantsQuery, getStudentsQuery, getAllStudentsQuery, searchJobsQuery };
+export { getAllRestaurantsQuery, getOrdersQuery,  searchMenusQuery };
